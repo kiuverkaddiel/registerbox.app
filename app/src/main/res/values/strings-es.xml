@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Don Papá Chino</string>
+
+    <string name="user_name_text">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="loading">Cargando…</string>
+    <string name="login_text">Entrar</string>
+    <string name="wrong_user_or_password_text">Usuario o contraseña incorrecto</string>
+
+    <string name="title_activity_dash_board">DashBoardActivity</string>
+    <string name="tab_text_1">Trabajo</string>
+    <string name="tab_text_2">IPV</string>
+    <string name="tab_text_3">Productos</string>
+    <string name="close_session">Cerrar sesión</string>
+    <string name="lock_session">Bloquear sesión</string>
+    <string name="change_password">Cambiar Contraseña</string>
+    <string name="manager_ips">Administrar IPV</string>
+    <string name="manager_products">Administrar produectos</string>
+    <string name="manager_tickets">Administrar vales</string>
+
+    <string name="working_area_fragment">Área de trabajo</string>
+    <string name="admin_ips_fragment">Administrar IPV</string>
+    <string name="date_text">Fecha:</string>
+    <string name="createdby_text">Creado por:</string>
+    <string name="cash_text">Efectivo:</string>
+    <string name="cash_in_the_box_text">Que dejaste en caja</string>
+    <string name="information_text">Información:</string>
+    <string name="information_for_tender_text">Para informar algo</string>
+    <string name="cancel_text">CANCELAR</string>
+    <string name="save_text">SALVAR</string>
+    <string name="product_id_text">Id del producto</string>
+    <string name="product_name_text">Nombre del producto</string>
+    <string name="product_count_text">Cantidad</string>
+    <string name="ok_text">OK</string>
+
+    <string name="add_product_title">Adicionar Producto</string>
+    <string name="put_ticket_cash">Pagado</string>
+    <string name="ticket_product_add">Cantidad del producto</string>
+    <string name="edit_product_title">Editar Producto</string>
+    <string name="cash">Pago</string>
+    <string name="ticket_price_label">Importe:</string>
+    <string name="pay_text">Pago:</string>
+    <string name="refund_text">Vuelto:</string>
+    <string name="count_product_text">Cantidad</string>
+    <string name="show_tickets_text">Ver Vales</string>
+    <string name="current_password">Contraseña actual</string>
+    <string name="new_password">Nueva contraseña</string>
+    <string name="repeat_password">Repita la contraseña</string>
+    <string name="own_product">Producto elaborado</string>
+    <string name="ticket_information_text">Información del vale</string>
+    <string name="show_tickets">Ver Vales</string>
+    <string name="show_ips">Ver IPV</string>
+    <string name="manager_user">Administrar Usuario</string>
+    <string name="admin_user">Administrar Usuario</string>
+    <string name="add_product_fb_text">Adicionar Producto</string>
+    <string name="full_name">Nombre Completo</string>
+    <string name="nickname">Nombre de Usuario</string>
+    <string name="rol_admin">Administrador</string>
+    <string name="print_ticket">Imprimir</string>
+    <string name="pay_ticket">Pagar</string>
+</resources>

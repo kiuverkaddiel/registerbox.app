@@ -1,0 +1,22 @@
+<resources>
+
+
+    <string name="title_activity_working_area">WorkingAreaActivity</string>
+    <!-- Strings used for fragments for navigation -->
+
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="product_name">Product Name</string>
+    <string name="price_count">Price$*Count</string>
+    <string name="product_id">Product ID</string>
+    <string name="product_price_text">Precio del producto</string>
+    <string name="zero_float_text">0.0</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="example_date_text">Thu Aug 31 12:57:44 AM CDT 2023</string>
+    <string name="example_user_name_text">Administrator</string>
+    <string name="rol_tender">Cajero(a)</string>
+</resources>

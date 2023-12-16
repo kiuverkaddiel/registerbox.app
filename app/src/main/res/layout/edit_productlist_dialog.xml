@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/editTextPutProductId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/product_id_text"
+        android:inputType="number"
+        android:paddingStart="10dp"
+        tools:ignore="Autofill,RtlSymmetry" />
+
+    <EditText
+        android:id="@+id/editTextProductName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/product_name_text"
+        android:inputType="text|textCapSentences"
+        android:paddingStart="10sp"
+        tools:ignore="Autofill,RtlSymmetry,TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/editTextTextProductPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/product_price_text"
+        android:inputType="number|numberDecimal"
+        android:paddingStart="10dp"
+        tools:ignore="Autofill,RtlSymmetry,TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/editTextTextProductCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/product_count_text"
+        android:inputType="number"
+        android:paddingStart="10dp"
+        tools:ignore="Autofill,RtlSymmetry,TouchTargetSizeCheck" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioButtonDelProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Restar" />
+
+        <EditText
+            android:id="@+id/editTextTextNewCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:enabled="false"
+            android:inputType="number"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp" />
+
+        <RadioButton
+            android:id="@+id/radioButtonAddProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="Sumar" />
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/checkBoxOwnProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:text="@string/own_product"
+        tools:ignore="RtlSymmetry" />
+</LinearLayout>

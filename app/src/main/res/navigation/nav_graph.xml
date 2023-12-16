@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/WorkingAreaFragment">
+
+    <fragment
+        android:id="@+id/WorkingAreaFragment"
+        android:name="kiu.business.registerboxapp.view.fragment.WorkingAreaFragment"
+        android:label="@string/working_area_fragment"
+        tools:layout="@layout/fragment_working_area">
+
+        <action
+            android:id="@+id/action_WorkingAreaFragment_to_ManagerIpsFragment"
+            app:destination="@id/AdminIpsFragment" />
+        <action
+            android:id="@+id/action_WorkingAreaFragment_to_ShowTicketListFragment"
+            app:destination="@id/ShowTicketListFragment" />
+        <action
+            android:id="@+id/action_WorkingAreaFragment_to_showIpsFragment"
+            app:destination="@id/showIpsFragment" />
+        <action
+            android:id="@+id/action_WorkingAreaFragment_to_AdminUserFragment"
+            app:destination="@id/AdminUserFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/AdminIpsFragment"
+        android:name="kiu.business.registerboxapp.view.fragment.AdminIpsFragment"
+        android:label="@string/admin_ips_fragment"
+        tools:layout="@layout/fragment_admin_ips">
+
+        <action
+            android:id="@+id/action_AdminIpsFragment_to_WorkingAreaFragment"
+            app:destination="@id/WorkingAreaFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/AdminUserFragment"
+        android:name="kiu.business.registerboxapp.view.fragment.FragmentAdminUser"
+        android:label="@string/admin_user"
+        tools:layout="@layout/fragment_admin_user">
+
+        <action
+            android:id="@+id/action_AdminUserFragment_to_WorkingAreaFragment"
+            app:destination="@id/WorkingAreaFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ShowTicketListFragment"
+        android:name="kiu.business.registerboxapp.view.fragment.ShowTicketsFragment"
+        android:label="@string/show_tickets"
+        tools:layout="@layout/fragment_show_tickets_list">
+
+        <action
+            android:id="@+id/action_ShowTicketFragment_to_WorkingAreFragment"
+            app:destination="@id/WorkingAreaFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/showIpsFragment"
+        android:name="kiu.business.registerboxapp.view.fragment.ShowIpsFragment"
+        android:label="@string/show_ips"
+        tools:layout="@layout/fragment_show_ips">
+
+        <action
+            android:id="@+id/action_showIpsFragment_to_WorkingAreaFragment"
+            app:destination="@id/WorkingAreaFragment" />
+    </fragment>
+</navigation>

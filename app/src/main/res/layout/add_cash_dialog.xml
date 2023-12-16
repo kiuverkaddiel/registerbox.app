@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editTextPutProductId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:ems="10"
+            android:hint="@string/cash"
+            android:inputType="number"
+            android:paddingStart="10dp"
+            tools:ignore="Autofill,RtlSymmetry" />
+
+        <ImageButton
+            android:id="@+id/imageButtonPayOk"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="#8BC34A"
+            app:srcCompat="@android:drawable/checkbox_on_background" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editTextTicketInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:focusable="false"
+        android:hint="@string/ticket_information_text"
+        android:inputType="text|textImeMultiLine|textCapSentences"
+        android:paddingStart="10dp"
+        tools:ignore="Autofill,RtlSymmetry" />
+
+</LinearLayout>
