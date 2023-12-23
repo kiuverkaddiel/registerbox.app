@@ -59,4 +59,6 @@
     <string name="rol_admin">Administrador</string>
     <string name="print_ticket">Imprimir</string>
     <string name="pay_ticket">Pagar</string>
+    <string name="scan_product">Escanear</string>
+    <string name="sort_by_sales">Ordenar por venta</string>
 </resources>

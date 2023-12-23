@@ -35,14 +35,11 @@ public class OnclickIpsProductListItem implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
-        Ips.getInstance().getCurrentProductList().removeProductFromList(product);
-        TicketManager.getInstance().addProduct(product);
-
-        if (notifierCurrentTicketChange != null)
-            notifierCurrentTicketChange.ticketProductAdded(product, -1);
-
-        if (notifierIpsProductListChange != null)
-            notifierIpsProductListChange.ipsProductRemoved(product, listPosition);
+        new ClickIpsProductListItem(
+                product,
+                listPosition,
+                notifierCurrentTicketChange,
+                notifierIpsProductListChange
+        ).click();
     }
 }

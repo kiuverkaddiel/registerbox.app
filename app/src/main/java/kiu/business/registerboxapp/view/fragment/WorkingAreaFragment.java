@@ -1,23 +1,9 @@
 package kiu.business.registerboxapp.view.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
-import android.os.CancellationSignal;
-import android.os.ParcelFileDescriptor;
-import android.print.PageRange;
-import android.print.PrintAttributes;
-import android.print.PrintDocumentAdapter;
-import android.print.PrintDocumentInfo;
-import android.print.PrintManager;
-import android.print.pdf.PrintedPdfDocument;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,19 +18,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import core.model.product.IProduct;
 import core.model.product.ProductObserver;
-import core.model.ticket.ITicket;
 import ips.model.Ips;
 import kiu.business.registerboxapp.R;
 import kiu.business.registerboxapp.databinding.FragmentWorkingAreaBinding;
+import kiu.business.registerboxapp.view.MyBarcodeDetector;
 import kiu.business.registerboxapp.view.activity.NotifierCurrentTicketChange;
 import kiu.business.registerboxapp.view.activity.NotifierIpsProductListChange;
 import kiu.business.registerboxapp.view.adapter.IpsProductListAdapter;
@@ -169,6 +152,13 @@ public class WorkingAreaFragment extends Fragment implements NotifierCurrentTick
         });
 
         binding.buttonSortBySales.setOnClickListener(v -> updateProducts());
+
+        binding.buttonScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MyBarcodeDetector(WorkingAreaFragment.this, binding.previewView, products).setupCamera();
+            }
+        });
 
         rvProductsList = binding.recyclerViewIpsProductList;
         rvProductsList.setLayoutManager(new LinearLayoutManager(getContext()));

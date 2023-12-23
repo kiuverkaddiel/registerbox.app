@@ -1,27 +1,61 @@
 package kiu.business.registerboxapp.view.activity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageAnalysis;
+import androidx.camera.core.ImageProxy;
+import androidx.camera.core.Preview;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.camera.view.PreviewView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.gms.tasks.Task;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.mlkit.vision.barcode.BarcodeScanner;
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
+import com.google.mlkit.vision.barcode.BarcodeScanning;
+import com.google.mlkit.vision.barcode.common.Barcode;
+import com.google.mlkit.vision.common.InputImage;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import core.model.Role;
 import core.model.Session;
 import ips.model.Ips;
 import kiu.business.registerboxapp.R;
 import kiu.business.registerboxapp.databinding.ActivityWorkingAreaBinding;
+import kiu.business.registerboxapp.view.MyBarcodeDetector;
 import kiu.business.registerboxapp.view.dialog.ChangePasswordDialog;
 import ticket.controller.TicketManager;
 
 public class WorkingAreaActivity extends AppCompatActivity {
+
+    private static final String CAMERA_PERMISSION = Manifest.permission.CAMERA;
+    private static final int PERMISSION_CODE = 1001;
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityWorkingAreaBinding binding;
@@ -46,6 +80,29 @@ public class WorkingAreaActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (checkSelfPermission(CAMERA_PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{CAMERA_PERMISSION}, PERMISSION_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, int[] grantResults) {
+        for (int r : grantResults) {
+            if (r == PackageManager.PERMISSION_DENIED) {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+
 
     @Override
     public void onBackPressed() {
