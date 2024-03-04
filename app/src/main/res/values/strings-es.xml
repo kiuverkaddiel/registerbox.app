@@ -61,4 +61,7 @@
     <string name="pay_ticket">Pagar</string>
     <string name="scan_product">Escanear</string>
     <string name="sort_by_sales">Ordenar por venta</string>
+    <string name="export_products">Exportar productos</string>
+    <string name="export_ips">Exportar IPV</string>
+    <string name="share_ips">Compartir IPV</string>
 </resources>

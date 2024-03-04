@@ -70,7 +70,7 @@ public class AppDb extends SQLiteOpenHelper implements UserStorage,
         createTableSession(db);
 
         createTableProductList(db);
-        insertSomeProducts(db);
+//        insertSomeProducts(db);
 
         createTableIps(db);
         insertEmptyIps(db);
@@ -232,7 +232,7 @@ public class AppDb extends SQLiteOpenHelper implements UserStorage,
         return db.insert(UserTable.TABLE_NAME, null, cv) > 0;
     }
 
-    private boolean insertUser(User user) {
+    public boolean insertUser(User user) {
         SQLiteDatabase db = getWritableDatabase();
         boolean inserted = insertUser(user, db);
         db.close();

@@ -2,13 +2,10 @@ package kiu.business.registerboxapp.view.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
@@ -74,8 +71,7 @@ public class EditProductListDialog extends DialogFragment {
 
         String title = getString(R.string.add_product_title);
 
-        if (product != null) {
-
+        if (product != null && !product.getName().isEmpty()) {
             title = getString(R.string.edit_product_title);
 
             etProductId.setText(product.getProductId());
@@ -84,6 +80,8 @@ public class EditProductListDialog extends DialogFragment {
             etProductPrice.setText(String.valueOf(product.getPrice()));
             etProductCount.setText(String.valueOf(productCount));
             cbOwnProduct.setChecked(product.isOwnProduct());
+        } else if (product != null && product.getName().isEmpty()) {
+            etProductId.setText(product.getProductId());
         }
 
         return new AlertDialog.Builder(getContext())
@@ -114,7 +112,7 @@ public class EditProductListDialog extends DialogFragment {
 
                     if (Ips.getInstance().updateProduct(aux, count)) {
 
-                        if (product != null) {
+                        if (product != null && !product.getName().isEmpty()) {
                             ((Product) product).update(aux);
                             if (notifierProductChange != null)
                                 notifierProductChange.notifyProductChangeAt(productListPosition);

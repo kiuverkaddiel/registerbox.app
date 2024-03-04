@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.fragment.ShowTicketsFragment">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleViewTickets"
         android:layout_width="0dp"

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.camera.core.CameraSelector;
@@ -27,11 +26,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import core.model.product.IProduct;
-import kiu.business.registerboxapp.view.activity.NotifierCurrentTicketChange;
-import kiu.business.registerboxapp.view.activity.NotifierIpsProductListChange;
-import kiu.business.registerboxapp.view.listener.ClickIpsProductListItem;
-
 public class MyBarcodeDetector {
 
     private final PreviewView previewView;
@@ -41,27 +35,27 @@ public class MyBarcodeDetector {
     private Preview previewUseCase;
     private ImageAnalysis analysisUseCase;
 
-    private NotifierCurrentTicketChange notifierCurrentTicketChange;
-    private NotifierIpsProductListChange notifierIpsProductListChange;
+    private final Fragment fragment;
 
-    private List<IProduct> products;
+    public interface CodeDetectObserver {
+        void codeDetected(String barcode);
+    }
 
-    private Fragment fragment;
+    private CodeDetectObserver observer = null;
 
-    public MyBarcodeDetector(Fragment fragment, PreviewView previewView, List<IProduct> products) {
+    public MyBarcodeDetector(Fragment fragment, PreviewView previewView) {
         this.previewView = previewView;
         this.fragment = fragment;
-        this.products = products;
 
-        if (fragment instanceof NotifierCurrentTicketChange)
-            notifierCurrentTicketChange = (NotifierCurrentTicketChange) fragment;
+        if (fragment instanceof CodeDetectObserver)
+            observer = (CodeDetectObserver) fragment;
 
-        if (fragment instanceof NotifierIpsProductListChange)
-            notifierIpsProductListChange = (NotifierIpsProductListChange) fragment;
+        previewView.setOnClickListener(v -> {
+            closeCamera();
+        });
     }
 
     public void setupCamera() {
-
 
         final ListenableFuture<ProcessCameraProvider> cameraProviderFuture =
                 ProcessCameraProvider.getInstance(fragment.requireContext());
@@ -74,14 +68,15 @@ public class MyBarcodeDetector {
                 cameraProvider = cameraProviderFuture.get();
                 bindAllCameraUseCases();
                 previewView.setVisibility(View.VISIBLE);
-                previewView.setOnClickListener(v -> {
-                    cameraProvider.unbindAll();
-                    previewView.setVisibility(View.GONE);
-                });
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
         }, ContextCompat.getMainExecutor(fragment.requireContext()));
+    }
+
+    private void closeCamera() {
+        cameraProvider.unbindAll();
+        previewView.setVisibility(View.GONE);
     }
 
     private void bindAllCameraUseCases() {
@@ -160,46 +155,19 @@ public class MyBarcodeDetector {
                 .addOnSuccessListener(this::onSuccessListener)
                 .addOnFailureListener(Throwable::printStackTrace)
                 .addOnCompleteListener(task -> image.close());
-
-
     }
 
     private void onSuccessListener(List<Barcode> barcodes) {
         if (barcodes.size() > 0) {
 
-            cameraProvider.unbindAll();
-            ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_ALARM, ToneGenerator.MAX_VOLUME);
-            toneGen1.startTone(ToneGenerator.TONE_PROP_BEEP, 150);
+            closeCamera();
+            ToneGenerator toneGen = new ToneGenerator(AudioManager.STREAM_ALARM, ToneGenerator.MAX_VOLUME);
+            toneGen.startTone(ToneGenerator.TONE_PROP_BEEP, 150);
 
             String productId = barcodes.get(0).getDisplayValue();
 
-            int index = -1;
-            IProduct product = null;
-            for (int i = 0; i < products.size(); i++) {
-                product = products.get(i);
-                if (product.getProductId().equals(productId)) {
-                    index = i;
-                    break;
-                }
-            }
-
-            if (index != -1) {
-                ClickIpsProductListItem clickIpsProductListItem = new ClickIpsProductListItem(
-                        product,
-                        index,
-                        notifierCurrentTicketChange,
-                        notifierIpsProductListChange
-                );
-                clickIpsProductListItem.setContext(fragment.getContext());
-                clickIpsProductListItem.click();
-            } else {
-                // TODO extract text
-                Toast.makeText(fragment.requireContext(),
-                        "Producto no entontrado", Toast.LENGTH_SHORT)
-                        .show();
-            }
-
-            setupCamera();
+            if (observer != null)
+                observer.codeDetected(productId);
         }
     }
 }

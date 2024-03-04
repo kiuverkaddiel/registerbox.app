@@ -35,11 +35,12 @@ import kiu.business.registerboxapp.view.adapter.TicketProductListAdapter;
 import kiu.business.registerboxapp.view.dialog.CancelTicketDialog;
 import kiu.business.registerboxapp.view.dialog.OkTicketDialog;
 import kiu.business.registerboxapp.view.dialog.PutCashDialog;
+import kiu.business.registerboxapp.view.listener.ClickIpsProductListItem;
 import ticket.controller.TicketManager;
 import ticket.model.Ticket;
 
 public class WorkingAreaFragment extends Fragment implements NotifierCurrentTicketChange,
-        NotifierIpsProductListChange, ProductObserver {
+        NotifierIpsProductListChange, ProductObserver, MyBarcodeDetector.CodeDetectObserver {
 
     private List<IProduct> products;
 
@@ -56,6 +57,8 @@ public class WorkingAreaFragment extends Fragment implements NotifierCurrentTick
     private TextView tvCashLabel;
     private TextView tvRefund;
     private TextView tvRefundLabel;
+
+    private MyBarcodeDetector myBarcodeDetector;
 
     @Override
     public View onCreateView(
@@ -96,12 +99,7 @@ public class WorkingAreaFragment extends Fragment implements NotifierCurrentTick
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setTitle("Vale no pago")
                         .setMessage("El vale debe de pagarse o tener alguna información de por que no está pago.")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                        .setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
                 builder.create().show();
             }
             return false;
@@ -134,12 +132,7 @@ public class WorkingAreaFragment extends Fragment implements NotifierCurrentTick
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setTitle("Vale no pago")
                         .setMessage("El vale debe de pagarse o tener alguna información de por que no está pago.")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                        .setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
                 builder.create().show();
             }
 
@@ -153,11 +146,9 @@ public class WorkingAreaFragment extends Fragment implements NotifierCurrentTick
 
         binding.buttonSortBySales.setOnClickListener(v -> updateProducts());
 
-        binding.buttonScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new MyBarcodeDetector(WorkingAreaFragment.this, binding.previewView, products).setupCamera();
-            }
+        binding.buttonScan.setOnClickListener(v -> {
+            myBarcodeDetector = new MyBarcodeDetector(WorkingAreaFragment.this, binding.previewView);
+            myBarcodeDetector.setupCamera();
         });
 
         rvProductsList = binding.recyclerViewIpsProductList;
@@ -283,5 +274,37 @@ public class WorkingAreaFragment extends Fragment implements NotifierCurrentTick
     @Override
     public void productRemoved(IProduct product) {
 
+    }
+
+    @Override
+    public void codeDetected(String barcode) {
+        int index = -1;
+        IProduct product = null;
+        for (int i = 0; i < products.size(); i++) {
+            product = products.get(i);
+            if (product.getProductId().equals(barcode)) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index != -1) {
+            ClickIpsProductListItem clickIpsProductListItem = new ClickIpsProductListItem(
+                    product,
+                    index,
+                    this,
+                    this
+            );
+            clickIpsProductListItem.setContext(getContext());
+            clickIpsProductListItem.click();
+        } else {
+            // TODO extract text
+            Toast.makeText(getContext(),
+                    "Producto no entontrado", Toast.LENGTH_SHORT)
+                    .show();
+        }
+
+        assert myBarcodeDetector != null;
+        myBarcodeDetector.setupCamera();
     }
 }

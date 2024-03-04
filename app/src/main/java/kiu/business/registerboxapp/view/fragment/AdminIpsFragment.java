@@ -20,11 +20,14 @@ import java.util.List;
 import core.model.product.IProduct;
 import ips.model.Ips;
 import kiu.business.registerboxapp.databinding.FragmentAdminIpsBinding;
+import kiu.business.registerboxapp.view.MyBarcodeDetector;
 import kiu.business.registerboxapp.view.adapter.ProductListAdapter;
 import kiu.business.registerboxapp.view.dialog.DialogNotifierProductChange;
 import kiu.business.registerboxapp.view.dialog.EditProductListDialog;
+import product.model.Product;
 
-public class AdminIpsFragment extends Fragment implements DialogNotifierProductChange {
+public class AdminIpsFragment extends Fragment implements DialogNotifierProductChange,
+        MyBarcodeDetector.CodeDetectObserver {
 
     private FragmentAdminIpsBinding binding;
     private final Ips ips = Ips.getInstance();
@@ -34,6 +37,8 @@ public class AdminIpsFragment extends Fragment implements DialogNotifierProductC
 
     private List<IProduct> products;
     private ProductListAdapter productListAdapter;
+
+    private MyBarcodeDetector myBarcodeDetector;
 
     @Override
     public View onCreateView(
@@ -65,9 +70,10 @@ public class AdminIpsFragment extends Fragment implements DialogNotifierProductC
         binding.btCancel.setOnClickListener(v ->
                 binding.linearLayoutButtons.setVisibility(View.GONE));
 
-        binding.floatingButton.setOnClickListener(v ->
-                new EditProductListDialog(null, 0, products.size()).show(getChildFragmentManager(),
-                EditProductListDialog.TAG));
+        binding.floatingButton.setOnClickListener(v -> {
+            myBarcodeDetector = new MyBarcodeDetector(AdminIpsFragment.this, binding.previewView);
+            myBarcodeDetector.setupCamera();
+        });
 
         binding.btSave.setOnClickListener(v -> {
             String strCash = editTextCash.getText().toString();
@@ -94,6 +100,30 @@ public class AdminIpsFragment extends Fragment implements DialogNotifierProductC
 
         });
 
+    }
+
+    @Override
+    public void codeDetected(String barcode) {
+        int index = -1, productCount = 0;
+        int endOfList = products.size();
+        IProduct product = null;
+        for (int i = 0; i < endOfList; i++) {
+            product = products.get(i);
+            if (product.getProductId().equals(barcode)) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index == -1) {
+            index = endOfList;
+            product = new Product("", barcode, 0f, false, null);
+        } else {
+            productCount = ips.getOriginProductList().getProducts().getOrDefault(product, 0);
+        }
+
+        new EditProductListDialog(product, productCount, index).show(getChildFragmentManager(),
+                EditProductListDialog.TAG);
     }
 
     private void loadData() {
