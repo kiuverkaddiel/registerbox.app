@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -236,7 +237,9 @@ public class WorkingAreaActivity extends AppCompatActivity {
                 DateHelper.ss
         );
         String fileName = date + "_ipv.csv";
-        String path = getExternalMediaDirs()[0].getPath() + File.separator + fileName;
+
+//        String path = getExternalMediaDirs()[0].getPath() + File.separator + fileName;
+        String path = Environment.getExternalStorageDirectory().getPath() + File.separator + fileName;
 
         String csv = Ips.getInstance().getCsv();
 

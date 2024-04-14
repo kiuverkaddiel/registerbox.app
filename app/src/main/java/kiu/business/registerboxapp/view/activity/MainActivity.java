@@ -62,19 +62,23 @@ public class MainActivity extends AppCompatActivity {
         ips.fillProductList(tm.getTickets());
         tm.attachTicketObserver(ips);
 
-//        insert(db);
+        insert(db);
 
         MySleepyTask m = new MySleepyTask(500);
         m.execute();
     }
 
     private void insert(AppDb db) {
-//        try {
+        try {
 //            db.save(new User("kaylet", "Kaylet", Role.EMPLOYEE, true, null));
 //            db.save(new User("eddy", "Eddy", Role.EMPLOYEE, true, null));
 //            db.save(new User("misley", "Misley", Role.ADMIN, true, null));
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        }
+
+            db.save(new User("alfre", "Alfredo del Valle", Role.ADMIN, true, null));
+            db.save(new User("anayda", "Anayda", Role.EMPLOYEE, true, null));
+            db.save(new User("brenda", "Brenda", Role.EMPLOYEE, true, null));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 }

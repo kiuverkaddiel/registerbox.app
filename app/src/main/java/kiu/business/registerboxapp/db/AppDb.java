@@ -52,26 +52,23 @@ public class AppDb extends SQLiteOpenHelper implements UserStorage,
     public void onCreate(SQLiteDatabase db) {
 
         createTableUser(db);
-        try {
-            insertUser(
-                    new User(
-                            "admin",
-                            "Administrador",
-                            Role.ADMIN,
-                            true,
-                            User.MD5Encrypt("admin")
-                    ),
-                    db
-            );
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            insertUser(
+//                    new User(
+//                            "admin",
+//                            "Administrador",
+//                            Role.ADMIN,
+//                            true,
+//                            User.MD5Encrypt("admin")
+//                    ),
+//                    db
+//            );
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
 
         createTableSession(db);
-
         createTableProductList(db);
-//        insertSomeProducts(db);
-
         createTableIps(db);
         insertEmptyIps(db);
 
@@ -81,41 +78,6 @@ public class AppDb extends SQLiteOpenHelper implements UserStorage,
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-    }
-
-    private void insertSomeProducts(SQLiteDatabase db) {
-
-        List<Product> products = new ArrayList<>();
-
-        products.add(new Product("Hyper malta", "00000001", 200f, false, ""));
-        products.add(new Product("Time fly", "00000002", 180f, false, ""));
-        products.add(new Product("Refresco de lata", "00000003", 190f, false, ""));
-        products.add(new Product("Wiskey", "00000004", 800f, false, ""));
-        products.add(new Product("Jugo de lata", "00000005", 230f, false, ""));
-        products.add(new Product("Resfresco 1L", "00000006", 280f, false, ""));
-        products.add(new Product("Maicena 1Kg", "00000007", 850f, false, ""));
-        products.add(new Product("Aceite 1L", "00000008", 750f, false, ""));
-        products.add(new Product("Solveto 78g", "00000009", 200f, false, ""));
-
-        products.add(new Product("Bolsa de pan", "00000010", 180f, true, ""));
-        products.add(new Product("Bolsa de pan", "00000011", 170f, true, ""));
-        products.add(new Product("Cake", "00000012", 3000f, true, ""));
-        products.add(new Product("Cake", "00000013", 4000f, true, ""));
-        products.add(new Product("Cake", "00000014", 10000f, true, ""));
-        products.add(new Product("Mini Cake", "00000015", 1000f, true, ""));
-        products.add(new Product("Brazo gitano", "00000016", 1500f, true, ""));
-        products.add(new Product("Panetela", "00000017", 100f, true, ""));
-        products.add(new Product("Eclear", "00000018", 100f, true, ""));
-        products.add(new Product("Piramide", "00000019", 100f, true, ""));
-        products.add(new Product("Pastel", "00000020", 50f, true, ""));
-        products.add(new Product("Pan de gloria", "00000021", 50f, true, ""));
-        products.add(new Product("Palmera", "00000022", 50f, true, ""));
-        products.add(new Product("Coffe cake", "00000023", 120f, true, ""));
-        products.add(new Product("Caracoles", "00000024", 120f, true, ""));
-        products.add(new Product("Tartaleta", "00000025", 120f, true, ""));
-
-        for (Product product : products)
-            insertProduct(product, 10, db);
     }
 
     private void insertEmptyIps(SQLiteDatabase db) {
