@@ -28,19 +28,6 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/share_ips"
-        android:orderInCategory="100"
-        android:title="@string/share_ips"
-        app:showAsAction="never" />
-
-
-    <!--    <item-->
-<!--        android:id="@+id/manager_user"-->
-<!--        android:orderInCategory="100"-->
-<!--        android:title="@string/manager_user"-->
-<!--        app:showAsAction="never" />-->
-
-    <item
         android:id="@+id/manager_ips"
         android:orderInCategory="100"
         android:title="@string/manager_ips"
