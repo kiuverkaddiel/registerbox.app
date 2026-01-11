@@ -1,8 +1,7 @@
 package kiu.business.registerboxapp.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,15 +11,11 @@ import java.security.NoSuchAlgorithmException;
 import core.controller.UserManager;
 import core.model.Role;
 import core.model.Session;
-import core.model.TicketStatus;
 import core.model.User;
-import core.model.ticket.ITicket;
 import ips.model.Ips;
 import kiu.business.registerboxapp.R;
 import kiu.business.registerboxapp.db.AppDb;
 import kiu.business.registerboxapp.task.SleepyTask;
-import product.model.Product;
-import product.model.ProductList;
 import ticket.controller.TicketManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,9 +26,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    class MySleepyTask extends SleepyTask {
-        public MySleepyTask(long milliseconds) {
+    private static class MySleepyTask extends SleepyTask {
+        private final Context context;
+        public MySleepyTask(long milliseconds, Context context) {
             super(milliseconds);
+            this.context = context;
         }
 
         @Override
@@ -41,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(unused);
 
             Intent Login = new Intent();
-            Login.setClass(MainActivity.this, LoginActivity.class);
-            startActivity(Login);
+            Login.setClass(context, LoginActivity.class);
+            context.startActivity(Login);
         }
     }
 
@@ -62,23 +59,7 @@ public class MainActivity extends AppCompatActivity {
         ips.fillProductList(tm.getTickets());
         tm.attachTicketObserver(ips);
 
-        insert(db);
-
-        MySleepyTask m = new MySleepyTask(500);
+        MySleepyTask m = new MySleepyTask(500, this);
         m.execute();
-    }
-
-    private void insert(AppDb db) {
-        try {
-//            db.save(new User("kaylet", "Kaylet", Role.EMPLOYEE, true, null));
-//            db.save(new User("eddy", "Eddy", Role.EMPLOYEE, true, null));
-//            db.save(new User("misley", "Misley", Role.ADMIN, true, null));
-
-            db.save(new User("alfre", "Alfredo del Valle", Role.ADMIN, true, null));
-            db.save(new User("anayda", "Anayda", Role.EMPLOYEE, true, null));
-            db.save(new User("brenda", "Brenda", Role.EMPLOYEE, true, null));
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -52,20 +52,30 @@ public class AppDb extends SQLiteOpenHelper implements UserStorage,
     public void onCreate(SQLiteDatabase db) {
 
         createTableUser(db);
-//        try {
-//            insertUser(
-//                    new User(
-//                            "admin",
-//                            "Administrador",
-//                            Role.ADMIN,
-//                            true,
-//                            User.MD5Encrypt("admin")
-//                    ),
-//                    db
-//            );
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            insertUser(
+                    new User(
+                            "alfre",
+                            "Alfredo del Valle",
+                            Role.ADMIN,
+                            true,
+                            User.MD5Encrypt("alfre")
+                    ),
+                    db
+            );
+            insertUser(
+                    new User(
+                            "cajero",
+                            "Cajero",
+                            Role.EMPLOYEE,
+                            true,
+                            User.MD5Encrypt("cajero")
+                    ),
+                    db
+            );
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
 
         createTableSession(db);
         createTableProductList(db);
