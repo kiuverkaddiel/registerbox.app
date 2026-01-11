@@ -3,12 +3,13 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    namespace 'kiu.business.registerboxapp'
+    compileSdk 35
 
     defaultConfig {
         applicationId "kiu.business.registerboxapp"
-        minSdk 29
-        targetSdk 33
+        minSdk 23
+        targetSdk targetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -22,8 +23,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     buildFeatures {
         viewBinding true
@@ -52,7 +53,7 @@ dependencies {
     //noinspection GradleDependency
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     def camerax_version = "1.0.2"
@@ -66,7 +67,7 @@ dependencies {
     //noinspection GradleDependency
     implementation "androidx.camera:camera-view:1.0.0-alpha32"
 
-    implementation "com.google.mlkit:barcode-scanning:17.2.0"
+    implementation "com.google.mlkit:barcode-scanning:17.3.0"
 
     implementation files('libs/product-1.0-SNAPSHOT.jar')
     implementation files('libs/core-1.0-SNAPSHOT.jar')
@@ -74,6 +75,6 @@ dependencies {
     implementation files('libs/ticket-1.0-SNAPSHOT.jar')
 
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
